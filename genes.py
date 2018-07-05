@@ -20,6 +20,13 @@ class Gene(metaclass=abc.ABCMeta):
     def _random_value(self):
         pass
 
+    @abc.abstractmethod
+    def __add__(self, other):
+        pass
+
+    def mutate(self):
+        self._inner = self._random_value()
+
     def __str__(self):
         return str(self._inner)
 

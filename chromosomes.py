@@ -1,8 +1,10 @@
 from genes import *
 
+from typing import Sequence
+
 
 class Chromosome:
-    def __init__(self, genes):
+    def __init__(self, genes: Sequence[Gene]):
         self._genes = np.array(genes)
 
         if len(self._genes.shape) == 0 or self._genes.shape[0] == 0:
@@ -11,6 +13,11 @@ class Chromosome:
     @property
     def genes(self):
         return self._genes.copy()
+
+    def mutate(self, mutation_probability: float):
+        for gene in self._genes:
+            if np.random.rand(1) <= mutation_probability:
+                gene.mutate()
 
     def __add__(self, other):
         return Chromosome(self._genes + other.genes)
