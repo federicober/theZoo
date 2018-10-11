@@ -1,9 +1,9 @@
-from evolution_strategy import *
+from ..evolution_strategy import *
 
-from tests.my_test_case import MyNumpyTest
+from tests.my_test_case import MyIterablesTest
 
 
-class TestBasicEvolutionStrategy(MyNumpyTest):
+class TestBasicEvolutionStrategy(MyIterablesTest):
     def test_perf2prob(self):
         self.assertArrayEqual(np.array([0.2, 0.3, 0.5]), BasicEvolutionStrategy.perf2prob([2, 3, 5]))
 
@@ -12,6 +12,10 @@ class TestBasicEvolutionStrategy(MyNumpyTest):
 
     def test_perf2prob_with_negative(self):
         self.assertArrayEqual(np.array([0.2, 0.3, 0, 0.5]), BasicEvolutionStrategy.perf2prob([2, 3, -1, 5]))
+
+    def test_get_elite(self):
+        elite = BasicEvolutionStrategy(0, 3).get_elite("abcdefghij", (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+        self.assertSameContent(elit, ('h', 'i', 'j'))
 
     def test_evolve_no_mutation_no_elitism_single_performance_specie(self):
         n = 100

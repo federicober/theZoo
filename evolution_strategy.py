@@ -1,5 +1,9 @@
-from chromosomes import *
+from chromosomes import Chromosome
+
 import heapq
+import abc
+from typing import Sequence
+import numpy as np
 
 
 class EvolutionStrategy(metaclass=abc.ABCMeta):
@@ -21,13 +25,20 @@ class BasicEvolutionStrategy(EvolutionStrategy):
         probabilities = probabilities / np.nansum(probabilities)
         return probabilities
 
+    def get_elite(self, species: Sequence, ordering: Sequence[float]) -> Sequence:
+        if self.elitism == 0:
+            return []
+
+        best_species, best_perfs = zip(*heapq.nlargest(self.elitism, zip(species, ordering), key=lambda x: x[1]))
+        return list(best_species)
+
     def evolve(self, species: Sequence[Chromosome], performances: Sequence[float]) -> Sequence[Chromosome]:
         number_of_species = len(species)
 
         probabilities = self.perf2prob(performances)
 
-        new_generation = []
-        for i in range(number_of_species):
+        new_generation = self.get_elite(species, probabilities)
+        for i in range(number_of_species - len(new_generation)):
             new_specie = Chromosome.__add__(*np.random.choice(species, size=2, p=probabilities))
 
             new_specie.mutate(self.mutation_probability)

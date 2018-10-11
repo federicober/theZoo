@@ -19,3 +19,7 @@ class MyNumpyTest(unittest.TestCase):
                       f"are not equal to {array2[indexes]}"
 
         self.assertTrue((array2 == array1).all(), message)
+
+def MyIterablesTest(MyNumpyTest):
+    def assertSameContent(self, iterable1, iterable2):
+        self.assertSetEqual(set(iterable1), set(iterable2), f"{iterable1} and {iterable2} do not have the same content")

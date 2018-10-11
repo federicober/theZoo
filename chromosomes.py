@@ -1,5 +1,7 @@
-from genes import *
+from genes import Gene
 
+import abc
+import numpy as np
 from typing import Sequence
 
 
