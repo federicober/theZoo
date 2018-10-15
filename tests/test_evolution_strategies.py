@@ -13,11 +13,11 @@ class TestBasicEvolutionStrategy(MyIterablesTest):
     def test_perf2prob_with_negative(self):
         self.assertArrayEqual(np.array([0.2, 0.3, 0, 0.5]), BasicEvolutionStrategy.perf2prob([2, 3, -1, 5]))
 
-    def test_get_elit_ordered_performance(self):
+    def test_get_elite_ordered_performance(self):
         elite = BasicEvolutionStrategy(0, 3).get_elite("abcdefghij", (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
         self.assertSameContent(elit, ('h', 'i', 'j'))
 
-    def test_get_elit_ordered_performance(self):
+    def test_get_elite_ordered_performance(self):
         elite = BasicEvolutionStrategy(0, 5).get_elite("abcdefghij", (0, 11, 2, 12, 4, 13, 6, 7, 8, 9, 10))
         self.assertSameContent(elit, ('b', 'd', 'f', 'j', 'i'))
 
