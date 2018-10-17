@@ -1,2 +1,7 @@
-.idea
+.idea/
+.vscode/
+
 __pycache__/
+
+*.bat
+*.sh
