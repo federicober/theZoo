@@ -1,7 +1,8 @@
 import unittest
+import numpy as np
 
-from chromosomes import *
-
+from chromosomes import Chromosome, easy_chromosome
+from genes import BinaryGene
 
 class TestChromosomeClass(unittest.TestCase):
     def test_create_simple_chromosome(self):

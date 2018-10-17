@@ -20,6 +20,6 @@ class MyNumpyTest(unittest.TestCase):
 
         self.assertTrue((array2 == array1).all(), message)
 
-def MyIterablesTest(MyNumpyTest):
+class MyIterablesTest(MyNumpyTest):
     def assertSameContent(self, iterable1, iterable2):
         self.assertSetEqual(set(iterable1), set(iterable2), f"{iterable1} and {iterable2} do not have the same content")

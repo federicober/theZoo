@@ -25,11 +25,11 @@ class BasicEvolutionStrategy(EvolutionStrategy):
         probabilities = probabilities / np.nansum(probabilities)
         return probabilities
 
-    def get_elite(self, species: Sequence, ordering: Sequence[float]) -> Sequence:
+    def get_elite(self, species: Sequence, perfs: Sequence[float]) -> Sequence:
         if self.elitism == 0:
             return []
 
-        best_species, best_perfs = zip(*heapq.nlargest(self.elitism, zip(species, ordering), key=lambda x: x[1]))
+        best_species, _ = zip(*heapq.nlargest(self.elitism, zip(species, perfs), key=lambda x: x[1]))
         return list(best_species)
 
     def evolve(self, species: Sequence[Chromosome], performances: Sequence[float]) -> Sequence[Chromosome]:

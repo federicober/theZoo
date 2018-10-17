@@ -1,7 +1,9 @@
-from ..evolution_strategy import *
+from evolution_strategy import BasicEvolutionStrategy
+from chromosomes import easy_chromosome
 
 from tests.my_test_case import MyIterablesTest
 
+import numpy as np
 
 class TestBasicEvolutionStrategy(MyIterablesTest):
     def test_perf2prob(self):
@@ -15,11 +17,11 @@ class TestBasicEvolutionStrategy(MyIterablesTest):
 
     def test_get_elite_ordered_performance(self):
         elite = BasicEvolutionStrategy(0, 3).get_elite("abcdefghij", (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
-        self.assertSameContent(elit, ('h', 'i', 'j'))
+        self.assertSameContent(elite, ('h', 'i', 'j'))
 
-    def test_get_elite_ordered_performance(self):
+    def test_get_elite_unordered_performance(self):
         elite = BasicEvolutionStrategy(0, 5).get_elite("abcdefghij", (0, 11, 2, 12, 4, 13, 6, 7, 8, 9, 10))
-        self.assertSameContent(elit, ('b', 'd', 'f', 'j', 'i'))
+        self.assertSameContent(elite, ('b', 'd', 'f', 'j', 'i'))
 
     def test_evolve_no_mutation_no_elitism_single_performance_specie(self):
         n = 100
