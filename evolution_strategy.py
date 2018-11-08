@@ -2,7 +2,7 @@ from chromosomes import Chromosome
 
 import heapq
 import abc
-from typing import Sequence
+from typing import Sequence, List
 import numpy as np
 
 
@@ -25,7 +25,7 @@ class BasicEvolutionStrategy(EvolutionStrategy):
         probabilities = probabilities / np.nansum(probabilities)
         return probabilities
 
-    def get_elite(self, species: Sequence, perfs: Sequence[float]) -> Sequence:
+    def get_elite(self, species: Sequence, perfs: Sequence[float]) -> List:
         if self.elitism == 0:
             return []
 
