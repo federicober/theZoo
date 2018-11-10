@@ -3,10 +3,15 @@ from evolution_strategy import EvolutionStrategy
 
 
 class Ecosystem:
-    def __init__(self, model_genome: Individual, evolution_strategy: EvolutionStrategy, n_individuals: int or function):
+    def __init__(self,
+                 model_genome: Individual,
+                 evolution_strategy: EvolutionStrategy,
+                 n_individuals: int or function,
+                 fitness_function: function):
         self._model_genome = model_genome
         self._evolution_strategy = evolution_strategy
         self._n_individuals = n_individuals
+        self._fitness_function = fitness_function
 
         self._history = []
         self.generation_number = 0
@@ -26,3 +31,10 @@ class Ecosystem:
 
     def next_generation(self):
         pass
+
+    def nth_generation(self):
+        pass
+
+    def history(self):
+        pass
+
