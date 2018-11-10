@@ -18,6 +18,9 @@ class Ecosystem:
         self.current_generation = []
         self.clear()
 
+    def fitness(self, individual):
+        return self._fitness_function(individual)
+
     def clear(self):
         self.generation_number = 0
         self._history = []
