@@ -1,4 +1,4 @@
-from chromosomes import Chromosome
+from individuals import Individual
 
 import heapq
 import abc
@@ -8,7 +8,7 @@ import numpy as np
 
 class EvolutionStrategy(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def evolve(self, species: Sequence[Chromosome], performances: Sequence[float]) -> Sequence[Chromosome]:
+    def evolve(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
         pass
 
 
@@ -18,28 +18,28 @@ class BasicEvolutionStrategy(EvolutionStrategy):
         self.elitism = int(elitism)
 
     @staticmethod
-    def perf2prob(performances: Sequence[float]) -> Sequence[float]:
-        probabilities = np.array(performances)
+    def fitness2prob(fitness: Sequence[float]) -> Sequence[float]:
+        probabilities = np.array(fitness)
         probabilities[np.isnan(probabilities)] = 0
         probabilities[probabilities < 0] = 0
         probabilities = probabilities / np.nansum(probabilities)
         return probabilities
 
-    def get_elite(self, species: Sequence, perfs: Sequence[float]) -> List:
+    def get_elite(self, species: Sequence, fitness: Sequence[float]) -> List:
         if self.elitism == 0:
             return []
 
-        best_species, _ = zip(*heapq.nlargest(self.elitism, zip(species, perfs), key=lambda x: x[1]))
+        best_species, _ = zip(*heapq.nlargest(self.elitism, zip(species, fitness), key=lambda x: x[1]))
         return list(best_species)
 
-    def evolve(self, species: Sequence[Chromosome], performances: Sequence[float]) -> Sequence[Chromosome]:
+    def evolve(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
         number_of_species = len(species)
 
-        probabilities = self.perf2prob(performances)
+        probabilities = self.fitness2prob(fitness)
 
         new_generation = self.get_elite(species, probabilities)
         for i in range(number_of_species - len(new_generation)):
-            new_specie = Chromosome.__add__(*np.random.choice(species, size=2, p=probabilities))
+            new_specie = Individual.__add__(*np.random.choice(species, size=2, p=probabilities))
 
             new_specie.mutate(self.mutation_probability)
 

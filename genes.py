@@ -16,7 +16,8 @@ class Gene(metaclass=abc.ABCMeta):
     def value(self):
         return self._inner
 
-    @abc.abstractclassmethod
+    @classmethod
+    @abc.abstractmethod
     def _random_value(self):
         pass
 
