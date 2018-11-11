@@ -8,7 +8,7 @@ class Gene(metaclass=abc.ABCMeta):
 
     def __init__(self, value):
         if value is None:
-            self._inner = self._random_value()
+            self._inner = self.random_value()
         else:
             self._inner = self.base_type(value)
 
@@ -18,7 +18,7 @@ class Gene(metaclass=abc.ABCMeta):
 
     @classmethod
     @abc.abstractmethod
-    def _random_value(self):
+    def random_value(cls):
         pass
 
     @abc.abstractmethod
@@ -26,7 +26,7 @@ class Gene(metaclass=abc.ABCMeta):
         pass
 
     def mutate(self):
-        self._inner = self._random_value()
+        self._inner = self.random_value()
 
     def __str__(self):
         return str(self._inner)
@@ -47,7 +47,7 @@ class BinaryGene(Gene):
         super().__init__(value)
 
     @classmethod
-    def _random_value(cls):
+    def random_value(cls):
         if np.random.rand() < 0.5:
             return False
         else:
