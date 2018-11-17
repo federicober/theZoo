@@ -21,6 +21,9 @@ class Gene(metaclass=abc.ABCMeta):
     def random_value(cls):
         pass
 
+    def random(self):
+        return type(self)(self.random_value())
+
     @abc.abstractmethod
     def __add__(self, other):
         pass

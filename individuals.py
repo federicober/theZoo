@@ -1,6 +1,5 @@
 from genes import Gene
 
-import abc
 import numpy as np
 from typing import Sequence
 
@@ -32,6 +31,17 @@ class Individual:
 
     def __repr__(self):
         return f"Individual(({', '.join(map(repr, self._genome))}))"
+
+    def copy(self):
+        return Individual(self.genome)
+
+    def randomize(self):
+        self._genome = np.array(tuple(gene.random() for gene in self._genome))
+
+    def random_copy(self):
+        new_individual = Individual(self.genome)
+        new_individual.randomize()
+        return new_individual
 
 
 def easy_individual(*genes):
