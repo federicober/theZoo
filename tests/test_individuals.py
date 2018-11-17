@@ -17,6 +17,25 @@ class TestIndividualClass(unittest.TestCase):
         c = easy_individual(bool, bool, bool)
         self.assertEqual(eval(repr(c)), c)
 
+    def test_copy(self):
+        first_genome = Individual((BinaryGene(True), BinaryGene(False), BinaryGene(False), BinaryGene(True)))
+        second_genome = first_genome.copy()
+        self.assertEqual(first_genome, second_genome)
+        for i in range(10):
+            second_genome.randomize()
+            if first_genome != second_genome:
+                break
+        self.assertNotEqual(first_genome, second_genome)
+
+    def test_random_copy(self):
+        first_genome = Individual((BinaryGene(True), BinaryGene(False), BinaryGene(False), BinaryGene(True)))
+        second_genome = None
+        for i in range(10):
+            second_genome = first_genome.random_copy()
+            if first_genome != second_genome:
+                break
+        self.assertNotEqual(first_genome, second_genome)
+
 
 class TestBinaryGenome(unittest.TestCase):
     @staticmethod
