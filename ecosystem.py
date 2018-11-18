@@ -7,7 +7,7 @@ class Ecosystem:
                  model_genome: Individual,
                  evolution_strategy: EvolutionStrategy,
                  n_individuals: int or function,
-                 fitness_function: function):
+                 fitness_function):
         self._model_genome = model_genome
         self._evolution_strategy = evolution_strategy
         self._n_individuals = n_individuals
@@ -30,14 +30,19 @@ class Ecosystem:
         except TypeError:
             n_individuals = self._n_individuals
 
-        self.current_generation = [self._model_genome for i in range(n_individuals)]
+        self.current_generation = [self._model_genome.random_copy() for i in range(n_individuals)]
 
     def next_generation(self):
-        pass
+        fitness = [self._fitness_function(ind) for ind in self.current_generation]
+        self.current_generation = self._evolution_strategy.evolve(self.current_generation, fitness)
+        self._history.append(fitness)
 
-    def nth_generation(self):
-        pass
+    def nth_generation(self, n):
+        for i in range(n):
+            print('Generation number', i, end='\r')
+            self.next_generation()
 
+    @property
     def history(self):
-        pass
+        return self._history.copy()
 
