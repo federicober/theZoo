@@ -27,7 +27,7 @@ class TestBasicEvolutionStrategy(MyIterablesTest):
     def test_evolve_no_mutation_no_elitism_single_performance_specie(self):
         n = 100
         genes = [bool] * 6
-        evolution = BasicEvolutionStrategy(0, 0).evolve
+        evolution = BasicEvolutionStrategy(0, 0).crossover
 
         species = [easy_individual(*genes) for i in range(n)]
         good_specie = species[0]

@@ -8,7 +8,7 @@ import numpy as np
 
 class EvolutionStrategy(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def evolve(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
+    def crossover(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
         pass
 
 
@@ -32,7 +32,7 @@ class BasicEvolutionStrategy(EvolutionStrategy):
         best_species, _ = zip(*heapq.nlargest(self.elitism, zip(species, fitness), key=lambda x: x[1]))
         return list(best_species)
 
-    def evolve(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
+    def crossover(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
         number_of_species = len(species)
 
         probabilities = self.fitness2prob(fitness)

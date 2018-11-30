@@ -34,7 +34,7 @@ class Ecosystem:
 
     def next_generation(self):
         fitness = [self._fitness_function(ind) for ind in self.current_generation]
-        self.current_generation = self._evolution_strategy.evolve(self.current_generation, fitness)
+        self.current_generation = self._evolution_strategy.crossover(self.current_generation, fitness)
         self._history.append(fitness)
 
     def nth_generation(self, n):
