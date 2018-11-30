@@ -1,4 +1,4 @@
-from genes import Gene
+from genetic.genes import Gene
 
 import numpy as np
 from typing import Sequence

@@ -1,7 +1,7 @@
-from evolution_strategy import BasicEvolutionStrategy
-from individuals import easy_individual
+from genetic.evolution_strategy import BasicEvolutionStrategy
+from genetic.individuals import easy_individual
 
-from tests.my_test_case import MyIterablesTest
+from genetic.test.my_test_case import MyIterablesTest
 
 import numpy as np
 

@@ -1,5 +1,5 @@
-from individuals import Individual
-from evolution_strategy import EvolutionStrategy
+from genetic.individuals import Individual
+from genetic.evolution_strategy import EvolutionStrategy
 
 
 class Ecosystem:

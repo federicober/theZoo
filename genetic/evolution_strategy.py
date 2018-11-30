@@ -1,4 +1,4 @@
-from individuals import Individual
+from genetic.individuals import Individual
 
 import heapq
 import abc

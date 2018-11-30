@@ -1,6 +1,6 @@
 import unittest
 
-from genes import *
+from genetic.genes import *
 
 
 class TestBinaryGene(unittest.TestCase):

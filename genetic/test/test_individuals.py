@@ -1,8 +1,8 @@
 import unittest
 import numpy as np
 
-from individuals import Individual, easy_individual
-from genes import BinaryGene
+from genetic.individuals import Individual, easy_individual
+from genetic.genes import BinaryGene
 
 
 class TestIndividualClass(unittest.TestCase):
