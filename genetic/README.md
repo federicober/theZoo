@@ -1,4 +1,4 @@
-#Genetic algorithms
+# Genetic algorithms
 This package is dedicated to the easy creation and utilisation of genetic algorithms. A genetic algorithm in and algorithm 
 is a meta-heuristic that can be used in optimization problems.
 
