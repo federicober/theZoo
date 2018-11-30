@@ -6,13 +6,13 @@ from typing import Sequence, List
 import numpy as np
 
 
-class EvolutionStrategy(metaclass=abc.ABCMeta):
+class AbstractEvolutionStrategy(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def crossover(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
         pass
 
 
-class BasicEvolutionStrategy(EvolutionStrategy):
+class BasicEvolutionStrategy(AbstractEvolutionStrategy):
     def __init__(self, mutation_probability: float, elitism: int or bool):
         self.mutation_probability = mutation_probability
         self.elitism = int(elitism)

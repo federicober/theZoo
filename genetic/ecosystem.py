@@ -1,11 +1,11 @@
 from genetic.individuals import Individual
-from genetic.evolution_strategy import EvolutionStrategy
+from genetic.evolution_strategy import AbstractEvolutionStrategy
 
 
 class Ecosystem:
     def __init__(self,
                  model_genome: Individual,
-                 evolution_strategy: EvolutionStrategy,
+                 evolution_strategy: AbstractEvolutionStrategy,
                  n_individuals: int or function,
                  fitness_function):
         self._model_genome = model_genome
