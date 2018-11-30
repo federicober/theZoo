@@ -1,15 +1,23 @@
 from genetic.individuals import Individual
-from genetic.evolution_strategy import AbstractEvolutionStrategy
+from genetic.evolution_strategy import AbstractEvolutionStrategy, ElitismEvolution
+
+from typing import Callable
 
 
 class Ecosystem:
     def __init__(self,
                  model_genome: Individual,
-                 evolution_strategy: AbstractEvolutionStrategy,
-                 n_individuals: int or function,
-                 fitness_function):
+                 n_individuals: int or Callable,
+                 fitness_function: Callable,
+                 mutation_probability: float = 0,
+                 elitism: float or bool = 0,
+                 n_generations: int = None,
+                 evolution_strategy: AbstractEvolutionStrategy = None):
         self._model_genome = model_genome
-        self._evolution_strategy = evolution_strategy
+        if evolution_strategy is None:
+            self._evolution_strategy = ElitismEvolution(mutation_probability, elitism)
+        else:
+            self._evolution_strategy = evolution_strategy
         self._n_individuals = n_individuals
         self._fitness_function = fitness_function
 
@@ -17,6 +25,9 @@ class Ecosystem:
         self.generation_number = 0
         self.current_generation = []
         self.clear()
+
+        if n_generations:
+            self.nth_generation(n_generations)
 
     def fitness(self, individual):
         return self._fitness_function(individual)
@@ -45,4 +56,3 @@ class Ecosystem:
     @property
     def history(self):
         return self._history.copy()
-
