@@ -8,7 +8,7 @@ import numpy as np
 
 class AbstractEvolutionStrategy(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def crossover(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
+    def crossover(self, individuals: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
         pass
 
 
@@ -32,17 +32,22 @@ class ElitismEvolution(AbstractEvolutionStrategy):
         best_species, _ = zip(*heapq.nlargest(self.elitism, zip(species, fitness), key=lambda x: x[1]))
         return list(best_species)
 
-    def crossover(self, species: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
-        number_of_species = len(species)
+    def crossover(self, individuals: Sequence[Individual], fitness: Sequence[float]) -> Sequence[Individual]:
+        number_of_species = len(individuals)
 
         probabilities = self.fitness2prob(fitness)
 
-        new_generation = self.get_elite(species, probabilities)
+        new_generation = self.get_elite(individuals, probabilities)
         for i in range(number_of_species - len(new_generation)):
-            new_specie = Individual.__add__(*np.random.choice(species, size=2, p=probabilities))
+            new_specie = Individual.__add__(*np.random.choice(individuals, size=2, p=probabilities))
 
             new_specie.mutate(self.mutation_probability)
 
             new_generation.append(new_specie)
 
         return new_generation
+
+
+class BasicEvolution(ElitismEvolution):
+    def __init__(self, mutation_probability: float):
+        super().__init__(mutation_probability, 0)
