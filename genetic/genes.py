@@ -43,7 +43,7 @@ class Gene(metaclass=abc.ABCMeta):
         return self.value == other.value
 
 
-class BinaryGene(Gene):
+class BooleanGene(Gene):
     base_type = bool
 
     def __init__(self, value=None):
@@ -58,9 +58,9 @@ class BinaryGene(Gene):
 
     def __add__(self, other):
         if self.value == other.value:
-            return BinaryGene(self.value)
+            return BooleanGene(self.value)
         else:
-            return BinaryGene()
+            return BooleanGene()
 
 
 def easy_gene(type_or_value):
