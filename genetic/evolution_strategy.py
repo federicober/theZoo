@@ -12,7 +12,7 @@ class AbstractEvolutionStrategy(metaclass=abc.ABCMeta):
         pass
 
 
-class BasicEvolutionStrategy(AbstractEvolutionStrategy):
+class ElitismEvolution(AbstractEvolutionStrategy):
     def __init__(self, mutation_probability: float, elitism: int or bool):
         self.mutation_probability = mutation_probability
         self.elitism = int(elitism)
