@@ -1,11 +1,11 @@
-from genetic.genes import Gene
+from genetic.genes import AbstractGene
 
 import numpy as np
 from typing import Sequence
 
 
 class Individual:
-    def __init__(self, genome: Sequence[Gene]):
+    def __init__(self, genome: Sequence[AbstractGene]):
         self._genome = np.array(genome)
 
         if len(self._genome.shape) == 0 or self._genome.shape[0] == 0:
@@ -47,7 +47,7 @@ class Individual:
 def easy_individual(*genes):
     all_genes_dict = {}
 
-    for gene_type in Gene.__subclasses__():
+    for gene_type in AbstractGene.__subclasses__():
         all_genes_dict[gene_type.base_type] = gene_type
 
     return Individual([all_genes_dict[gene]() if isinstance(gene, type) else all_genes_dict[type(gene)](gene)

@@ -44,9 +44,9 @@ The basic arguments for creating an `Ecosystem` object are:
  - The hyper-parameters the `mutation_probability`, `n_individuas`.
 
 ### Genome and Genes
-To created a `Genome` object, just pass as an argument an iterable object composed of `Gene` objects.
+To create a `Genome` object, just pass as an argument an iterable object composed of `AbstractGene` objects.
 
-In the `genes` module, we offer different pre-built genes, like `BooleanGene`, `CategoricalGene`, `FloatGene`. However, different genes can 
+In the `genes.py` module, we offer different pre-built genes, like `BooleanGene`, `CategoricalGene`, `FloatGene`. However, different genes can 
 be built by inheriting from the abstract class `AbstractGene`.
 
 An `easy_genome()` function is also provided, to create genomes formed by prebuilt genes in a single line of code.
