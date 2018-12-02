@@ -1,6 +1,6 @@
 import abc
-
 import numpy as np
+import copy
 
 
 class AbstractGene(metaclass=abc.ABCMeta):
@@ -28,19 +28,21 @@ class AbstractGene(metaclass=abc.ABCMeta):
         if value is None:
             self._inner = self.random_value()
         else:
-            self._inner = self.base_type(value)
+            self._inner = value
 
     @property
     def value(self):
-        return self._inner
+        return copy.copy(self._inner)
 
-    @classmethod
+    def copy(self):
+        return copy.deepcopy(self)
+
     @abc.abstractmethod
-    def random_value(cls):
+    def random_value(self):
         pass
 
-    def random(self):
-        return type(self)(self.random_value())
+    def randomize(self):
+        self._inner = self.random_value()
 
     @abc.abstractmethod
     def __add__(self, other):
@@ -57,7 +59,7 @@ class AbstractGene(metaclass=abc.ABCMeta):
 
     def __eq__(self, other):
         if type(self) != type(other):
-            raise TypeError("== between %s and %s is not supported", type(self).__name__, type(other).__name__)
+            raise TypeError("__eq__ between %s and %s is not supported", type(self).__name__, type(other).__name__)
         return self.value == other.value
 
 
@@ -76,9 +78,25 @@ class BooleanGene(AbstractGene):
 
     def __add__(self, other):
         if self.value == other.value:
-            return BooleanGene(self.value)
+            return self.copy()
         else:
             return BooleanGene()
+
+
+class CategoricalGene(AbstractGene):
+    def __init__(self, n_categories, value=None):
+        self._n_categories = n_categories
+        super().__init__(value)
+
+    def random_value(self):
+        x = np.random.randint(0, self._n_categories)
+        return x
+
+    def __add__(self, other):
+        if self.value == other.value or np.random.rand() < 0.5:
+            return self.copy()
+        else:
+            return other.copy()
 
 
 def easy_gene(type_or_value):
