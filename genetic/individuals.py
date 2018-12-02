@@ -1,5 +1,6 @@
 from genetic.genes import AbstractGene
 
+from copy import deepcopy
 import numpy as np
 from typing import Sequence
 
@@ -13,7 +14,7 @@ class Individual:
 
     @property
     def genome(self):
-        return self._genome.copy()
+        return deepcopy(self._genome)
 
     def mutate(self, mutation_probability: float):
         for gene in self._genome:
@@ -36,10 +37,11 @@ class Individual:
         return Individual(self.genome)
 
     def randomize(self):
-        self._genome = np.array(tuple(gene.random() for gene in self._genome))
+        for gene in self._genome:
+            gene.randomize()
 
     def random_copy(self):
-        new_individual = Individual(self.genome)
+        new_individual = self.copy()
         new_individual.randomize()
         return new_individual
 
