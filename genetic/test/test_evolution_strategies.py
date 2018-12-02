@@ -29,7 +29,7 @@ class TestBasicEvolutionStrategy(MyIterablesTest):
         genes = [bool] * 6
         evolution = ElitismEvolution(0, 0).crossover
 
-        species = [easy_individual(*genes) for i in range(n)]
+        species = [easy_individual(genes) for i in range(n)]
         good_specie = species[0]
 
         performances = [1] + [0] * (n - 1)

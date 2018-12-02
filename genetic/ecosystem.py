@@ -1,4 +1,4 @@
-from genetic.individuals import Individual
+from genetic.individuals import Individual, easy_individual
 from genetic.evolution_strategy import AbstractEvolutionStrategy, ElitismEvolution
 
 from typing import Callable
@@ -44,7 +44,7 @@ class Ecosystem:
         self.current_generation = [self._model_genome.random_copy() for i in range(n_individuals)]
 
     def next_generation(self):
-        fitness = [self._fitness_function(ind) for ind in self.current_generation]
+        fitness = [self._fitness_function(ind.values) for ind in self.current_generation]
         self.current_generation = self._evolution_strategy.crossover(self.current_generation, fitness)
         self._history.append(fitness)
 

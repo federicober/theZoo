@@ -43,8 +43,12 @@ class Individual:
         new_individual.randomize()
         return new_individual
 
+    @property
+    def values(self):
+        return np.array([gene.value for gene in self._genome])
 
-def easy_individual(*genes):
+
+def easy_individual(genes):
     all_genes_dict = {}
 
     for gene_type in AbstractGene.__subclasses__():

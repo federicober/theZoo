@@ -14,7 +14,7 @@ class TestIndividualClass(unittest.TestCase):
             Individual(())
 
     def test_repr_with_small_individual(self):
-        c = easy_individual(bool, bool, bool)
+        c = easy_individual((bool, bool, bool))
         self.assertEqual(eval(repr(c)), c)
 
     def test_copy(self):
@@ -60,18 +60,18 @@ class TestBinaryGenome(unittest.TestCase):
 
 class TestIndividualClassMethods(unittest.TestCase):
     def test_easy_individuals_should_return_individual(self):
-        self.assertIsInstance(easy_individual(bool, bool), Individual)
+        self.assertIsInstance(easy_individual((bool, bool)), Individual)
 
     def test_easy_individual_with_two_bool_should_return_individual_with_two_binary(self):
         np.random.seed(42)
-        self.assertEqual(easy_individual(bool, bool), Individual((BooleanGene(False), BooleanGene(True))))
+        self.assertEqual(easy_individual((bool, bool)), Individual((BooleanGene(False), BooleanGene(True))))
 
     def test_easy_individual_with_true_false_should_return_individual_binaries_true_false(self):
-        self.assertEqual(easy_individual(True, False), Individual((BooleanGene(True), BooleanGene(False))))
+        self.assertEqual(easy_individual((True, False)), Individual((BooleanGene(True), BooleanGene(False))))
 
     def test_easy_individual_with_bool_false_should_return_individual_binaries_true_false(self):
         np.random.seed(42)
-        self.assertEqual(easy_individual(bool, False), Individual((BooleanGene(False), BooleanGene(False))))
+        self.assertEqual(easy_individual((bool, False)), Individual((BooleanGene(False), BooleanGene(False))))
 
 
 if __name__ == "__main__":
