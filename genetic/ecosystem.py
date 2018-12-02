@@ -2,6 +2,7 @@ from genetic.individuals import Individual, easy_individual
 from genetic.evolution_strategy import AbstractEvolutionStrategy, ElitismEvolution
 
 from typing import Callable
+import numpy as np
 
 
 class Ecosystem:
@@ -21,7 +22,7 @@ class Ecosystem:
         self._n_individuals = n_individuals
         self._fitness_function = fitness_function
 
-        self._history = []
+        self._history = History()
         self.generation_number = 0
         self.current_generation = []
         self.clear()
@@ -34,7 +35,7 @@ class Ecosystem:
 
     def clear(self):
         self.generation_number = 0
-        self._history = []
+        self._history.clear()
 
         try:
             n_individuals = self._n_individuals(0)
@@ -46,7 +47,7 @@ class Ecosystem:
     def next_generation(self):
         fitness = [self._fitness_function(ind.values) for ind in self.current_generation]
         self.current_generation = self._evolution_strategy.crossover(self.current_generation, fitness)
-        self._history.append(fitness)
+        self._history.append(self.current_generation, fitness)
 
     def nth_generation(self, n):
         for i in range(n):
@@ -55,4 +56,65 @@ class Ecosystem:
 
     @property
     def history(self):
-        return self._history.copy()
+        return self._history  # .copy()
+
+
+class History:
+    def __init__(self):
+        self._history = []
+        self.clear()
+
+    def clear(self):
+        self._history.clear()
+
+    def copy(self):
+        pass
+
+    def append(self, individuals, fitness):
+        self._history.append(Generation(individuals, fitness))
+
+    def max(self):
+        return (generation.max() for generation in self._history)
+
+    def best(self, n=1):
+        return (generation.best(n) for generation in self._history)
+
+    def mean(self):
+        return (generation.mean() for generation in self._history)
+
+    def std(self):
+        return (generation.std() for generation in self._history)
+
+
+class Generation:
+    def __init__(self, individuals, fitness):
+        self._ordered = False
+        for ind, fit in zip(individuals, fitness):
+            ind.fitness = fit
+        self._individuals = individuals
+        self._fitness = fitness
+
+    def copy(self):
+        raise NotImplementedError()
+
+    def _order(self):
+        self._individuals.sort(key=lambda x: x.individuals)
+
+    def max(self):
+        if self._ordered:
+            return self._individuals[0].fitness
+        return max(self._fitness)
+
+    def best(self, n=1):
+        if self._ordered:
+            self._order()
+
+        if n == 1:
+            return self._individuals[0]
+        return self._individuals[:n]
+
+    def mean(self):
+        return np.mean(self._fitness)
+
+    def std(self):
+        return np.std(self._fitness)
